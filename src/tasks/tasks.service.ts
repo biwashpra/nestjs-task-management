@@ -46,8 +46,12 @@ export class TasksService {
     return newTask;
   }
 
-  getTaskById(id: string): Task | undefined {
-    return this.tasks.find((task) => task.id === id);
+  getTaskById(id: string): Task {
+    const task = this.tasks.find((task) => task.id === id);
+    if (!task) {
+      throw new NotFoundException(`Task not found for id: ${id}`);
+    }
+    return task;
   }
 
   deleteTaskById(id: string): Task[] {
@@ -56,9 +60,6 @@ export class TasksService {
 
   updateTask(id: string, updateTaskDto: UpdateTaskDto): Task {
     const task = this.getTaskById(id);
-    if (!task) {
-      throw new NotFoundException(`Task with ID "${id}" not found`);
-    }
 
     const { title, description, status } = updateTaskDto;
     if (title !== undefined) {

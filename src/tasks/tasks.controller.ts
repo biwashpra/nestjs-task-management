@@ -29,9 +29,7 @@ export class TasksController {
 
   @Get('/:id')
   getTaskById(@Param('id') id: string) {
-    const task = this.taskService.getTaskById(id);
-    if (!task) return `Task not found for id: ${id}`;
-    return task;
+    return this.taskService.getTaskById(id);
   }
 
   @Post()
